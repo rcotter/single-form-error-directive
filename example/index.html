@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Single Form Error</title>
+    <style>
+        input {
+            width: 300px;
+            margin-bottom: 10px;
+        }
+
+        .invalid {
+            border-color: red;
+        }
+    </style>
+</head>
+<body>
+<div ng-app="app" ng-controller="formController" ng-cloak>
+    <h2>Create A Couple Errors</h2>
+
+    <form name="form">
+        <input type="text" name="letters" placeholder="1 or more letters only" ng-model="letters"
+               ng-pattern="/^[a-zA-Z]*$/" ng-minlength=1 ng-maxlength=100
+               ng-class="{invalid: form.letters.$invalid && form.letters.$dirty}">
+        <br/>
+        <input type="text" name="numbers" placeholder="1 or more numbers only" ng-model="numbers"
+               ng-pattern="/^[0-9]*$/" ng-minlength=1 ng-maxlength=100
+               ng-class="{invalid: form.numbers.$invalid && form.numbers.$dirty}">
+        <br/>
+        <div ng-if="!error" class="error">
+            <span style="color: green">All Is Well</span>
+        </div>
+        <div ng-if="error" class="error">
+            <span ng-bind="error"></span>
+        </div>
+    </form>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
+<script src="index.js"></script>
+<script src="../single-form-error-directive.js"></script>
+</body>
+</html>
