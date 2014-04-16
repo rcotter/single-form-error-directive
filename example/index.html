@@ -13,6 +13,12 @@
 
         .invalid {
             border-color: red;
+            color: red;
+        }
+
+        .valid {
+            border-color: green;
+            color: green;
         }
     </style>
 </head>
@@ -29,11 +35,12 @@
                ng-pattern="/^[0-9]*$/" ng-minlength=1 ng-maxlength=100
                ng-class="{invalid: form.numbers.$invalid && form.numbers.$dirty}">
         <br/>
-        <div ng-if="!error" class="error">
-            <span style="color: green">All Is Well</span>
+
+        <div ng-if="!error" class="valid">
+            <h4>All Is Well</h4>
         </div>
-        <div ng-if="error" class="error">
-            <span ng-bind="error"></span>
+        <div ng-if="error" class="invalid">
+            <h4 ng-bind="error"></h4>
         </div>
     </form>
 </div>
