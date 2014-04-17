@@ -1,11 +1,9 @@
 //TODO Works but needs impl!!!
-app.directive('test', function () {
+app.directive('singleFormError', ["$timeout", function ($timeout) {
     return {
-        scope: {
-            onError: "&"
-        },
-        require:"^form",
-        restrict: 'ECMA', //TODO narrow
+        scope: false,
+        require: "^form",
+        restrict: 'A',
         link: function (scope, element, attrs, form) {
 
             var invalidInput;
@@ -23,9 +21,8 @@ app.directive('test', function () {
                     return;
                 }
 
+                form.$singleErrorInput = input.$name;
                 invalidInput = input;
-                console.log("%s %s", input.$name, true);
-                scope.onError(input.$name, true);
                 return true;
             }
 
@@ -52,8 +49,7 @@ app.directive('test', function () {
 
                     // Clear the current error if its no longer valid
                     if (invalidInput && invalidInput.$name === name) {
-                        console.log("%s %s", name, false);
-                        scope.onError(name, false);
+                        form.$singleErrorInput = null;
                         invalidInput = null;
                     }
 
@@ -65,7 +61,6 @@ app.directive('test', function () {
 
             // Ref http://www.whatibroke.com/?p=894
             angular.forEach(form, function (val, key) {
-
                 if ('$' !== key.charAt(0)) {
                     inputNames.push(key);
                     scope.$watch(form.$name + "." + key + ".$invalid", getValidateInputs(key));
@@ -73,4 +68,4 @@ app.directive('test', function () {
             });
         }
     };
-});
+}]);

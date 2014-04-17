@@ -23,24 +23,27 @@
     </style>
 </head>
 <body>
-<div ng-app="app" ng-controller="formController" ng-cloak>
+<div ng-app="app" ng-controller="formController">
     <h2>Create A Couple Errors</h2>
 
-    <form name="form">
+    <form name="formName" single-form-error ng-cloak>
         <input type="text" name="letters" placeholder="1 or more letters only" ng-model="letters"
                ng-pattern="/^[a-zA-Z]*$/" ng-minlength=1 ng-maxlength=100
-               ng-class="{invalid: form.letters.$invalid && form.letters.$dirty}">
+               ng-class="{invalid: 'letters' === formName.$singleErrorInput && formName.letters.$dirty}">
         <br/>
         <input type="text" name="numbers" placeholder="1 or more numbers only" ng-model="numbers"
                ng-pattern="/^[0-9]*$/" ng-minlength=1 ng-maxlength=100
-               ng-class="{invalid: form.numbers.$invalid && form.numbers.$dirty}">
+               ng-class="{invalid: 'numbers' === formName.$singleErrorInput && formName.numbers.$dirty}">
         <br/>
 
-        <div ng-if="!error" class="valid">
+        <div ng-if="!formName.$singleErrorInput" class="valid">
             <h4>All Is Well</h4>
         </div>
-        <div ng-if="error" class="invalid">
-            <h4 ng-bind="error"></h4>
+        <div ng-if="'letters' === formName.$singleErrorInput && formName.letters.$dirty" class="invalid">
+            <h4>Bad Letter</h4>
+        </div>
+        <div ng-if="'numbers' === formName.$singleErrorInput && formName.numbers.$dirty" class="invalid">
+            <h4>Bad Number</h4>
         </div>
     </form>
 </div>
